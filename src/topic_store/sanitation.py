@@ -396,6 +396,9 @@ def exit_fn_dict_to_ros(parents, key, old_object, new_object, new_items):
                 # Here we accept that if the message type has changed that we cannot necessarily fill all slots
                 rospy.logwarn("Could not set slot '{}' for class '{}' maybe the message definitions are "
                               "incompatible".format(attribute_key, new_object))
+            except AttributeError as e:
+                # Here we accept that if the message type has changed that we cannot necessarily fill all slots
+                rospy.logwarn("Could not set slot '{}' for class '{}' because '{}".format(attribute_key, new_object, e))
         if EXPERIMENTAL_COMPRESSION_ENABLED:
             if isinstance(new_object, CompressedImage):
                 new_object = compressed_image_to_image(new_object)
