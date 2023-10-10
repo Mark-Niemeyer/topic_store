@@ -61,8 +61,8 @@ def get_mongo_storage_by_session(client, query, *args, **kwargs):
         while True:
             try:
                 char = input("Please enter a number or enter for all: ")
-                if char is "":
-                    return client.find(*args, **kwargs)
+                if char == "":
+                    return client.find(*args, **kwargs), client.count(query, estimate=not bool(query))
                 return client.find_by_session_id(s_lut[int(char)]["id"], *args, **kwargs), s_lut[int(char)]["count"]
             except (EOFError, ValueError, IndexError):
                 print("Please choose an appropriate option")
